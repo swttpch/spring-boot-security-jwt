@@ -4,13 +4,35 @@ services:
     image: "postgres:16.0-alpine3.18"
     container_name: postgres-security
     environment:
-      POSTGRES_DB: security_db
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: username
+      POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
     restart: unless-stopped
     ports:
       - "4321:5432"
+    networks:
+      - postgres
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
 volumes:
   postgres:
+  pgadmin:
