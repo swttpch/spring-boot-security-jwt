@@ -1,17 +1,13 @@
 spring:
-  sql:
-    init:
-      mode: always
   datasource:
-    url: jdbc:postgresql://localhost:4321/security_db
+    url: jdbc:postgresql://localhost:1234/testdb
     driver-class-name: org.postgresql.Driver
-    username: username
-    password: password
+    username: testuser
+    password: testpass
   jpa:
     hibernate:
       ddl-auto: none
-    defer-datasource-initialization: true
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
